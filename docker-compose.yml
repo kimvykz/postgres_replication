@@ -1,0 +1,44 @@
+version: '1'
+
+services:
+  pg_db_master:
+    image: postgres:17.4
+    container_name: pg_db_master
+    restart: always
+    volumes:
+        - ./data-master:/var/lib/postgresql/data
+        - ./tmp-master:/tmp
+    ports:
+      - '5432:5432'
+    environment:
+      - 'POSTGRES_USER=root1'
+      - 'POSTGRES_PASSWORD=root1'
+      - 'POSTGRES_DB=kari'
+
+  pg_db_standby:
+    image: postgres:latest
+    container_name: pg_db_standby
+    restart: always
+    volumes:
+        - ./data-standby:/var/lib/postgresql/data
+        - ./tmp-standby:/tmp
+    ports:
+      - '5433:5432'
+    environment:
+      - 'POSTGRES_USER=root2'
+      - 'POSTGRES_PASSWORD=root2'
+      - 'POSTGRES_DB=kari'
+
+  pg_db_standby_02:
+    image: postgres:latest
+    container_name: pg_db_standby_02
+    restart: always
+    volumes:
+        - ./data-standby:/var/lib/postgresql/data
+        - ./tmp-standby:/tmp
+    ports:
+      - '5434:5432'
+    environment:
+      - 'POSTGRES_USER=root3'
+      - 'POSTGRES_PASSWORD=root3'
+      - 'POSTGRES_DB=kari'
